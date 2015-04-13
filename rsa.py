@@ -112,7 +112,7 @@ def main():
         m =0
         for i, c in enumerate(bytes):
             m |= (ord(c) << i*8)
-        print "m = ", m	
+
         c = encryption(m, e, n)
         writeFile(args.outFile,str(c))
         writeFile(kpub, pub_key)
@@ -125,7 +125,6 @@ def main():
         c = int(readFile(args.outFile)) 
         m = decryption(c, d, n)
 
-        print "m = ", m
         res = ""
         while m > 0:
             byte = m % 256
