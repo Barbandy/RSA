@@ -81,7 +81,9 @@ def KeyGen(bitlen):
     q = PrimeN(bitlen)	
     while p == q:
         q = PrimeN(bitLen)
-       
+		
+    print p	
+    print q
     n = p * q
     fi = (p-1) * (q-1)
     e = 65537  # простые числа Ферма 17, 257 или 65537
@@ -109,10 +111,10 @@ def main():
     if args.mode == 'e':
         pub_key, priv_key, n, e = KeyGen(bitlen)
         bytes = readFile(args.inFile)
+
         m =0
         for i, c in enumerate(bytes):
             m |= (ord(c) << i*8)
-
         c = encryption(m, e, n)
         writeFile(args.outFile,str(c))
         writeFile(kpub, pub_key)
