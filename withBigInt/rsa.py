@@ -63,15 +63,17 @@ def MillerRabin(m):
         s += 1
             
     for i in range(20):
+        #a = BigInt.GenerateRandomMax(m - 1)
         a = random.randint(1, m-1)
         x = pow(a, t, m)
         if x == 1:
             return True # составное
-        for i in range(s - 1):
-            x = pow(x, 2, m)
-            if x == m - 1:
-                return True # составное
-        return x == m - 1   # простое
+        i = BigInt.BigInt(0)
+    for i in range(s - 1):
+        x = pow(x, 2, m)
+        if x == m - 1:
+            return True
+    return x == m - 1
 				
 		
 # генерация ключей		

@@ -79,7 +79,12 @@ private:
 	void DelZeros();	
 	void ShiftRight();	
 
-	friend int cmp(BigInt A, BigInt B);	
-
+	friend int cmp(BigInt A, BigInt B);
+        friend BigInt GenerateRandomLen(int bitLen);
+        friend BigInt GenerateRandomMax(BigInt max);
 };
-
+// генерация случайного числа заданной длинны
+BigInt GenerateRandomLen(int bitLen);
+// генерация случайного числа, не превосходящего заданное
+BigInt GenerateRandomMax(BigInt max);	
+void initRandom();

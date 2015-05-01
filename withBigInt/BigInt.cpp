@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #pragma warning(disable: 4996)
 
 
@@ -23,7 +24,7 @@ BigInt::BigInt(char* str)
 	int SizeStr = strlen(str);
 	for(int i = SizeStr - 1; i >= sign; i--)
 		elements.push_back(str[i] - '0');
-	// TODO: проверка
+	// TODO: i?iaa?ea
 }
 
 BigInt::BigInt(int i)
@@ -131,9 +132,9 @@ bool BigInt::saveTo_txt(const char* filename)
 
 bool BigInt::getFrom_bin(const char* filename)
 {
-   FILE *fp = fopen(filename,"r+b");				 //на вход число в виде 0X000000
-  if (!fp)											 //знак или 1- "-" или 0
-		return false;								 //т.е "- "знак будет в виде 01000000...
+   FILE *fp = fopen(filename,"r+b");				 //ia aoia ?enei a aeaa 0X000000
+  if (!fp)											 //ciae eee 1- "-" eee 0
+		return false;								 //o.a "- "ciae aoaao a aeaa 01000000...
    fseek(fp, 0, SEEK_END);
 	int fileSize = ftell(fp);
   fseek(fp, 0, SEEK_SET);
@@ -154,7 +155,7 @@ bool BigInt::getFrom_bin(const char* filename)
 }
 
 bool BigInt::saveTo_bin(const char* filename)
-{												  //на выходе число в виде 0X000000
+{												  //ia auoiaa ?enei a aeaa 0X000000
    FILE *fp = fopen(filename,"w+b");
   if (!fp)
 		return false;
@@ -529,4 +530,53 @@ BigInt BigInt::operator%(const long long int B)const
 BigInt BigInt::operator^(const long long int B)const
 {
 	return *this ^ (BigInt) B;
+}
+BigInt GenerateRandomLen(int bitLen)
+{
+    initRandom();
+    BigInt res(1);
+    size_t res_size ;
+    res_size = bitLen / 8;
+    res.elements.resize(res_size);
+
+    for (size_t i = 0; i < res_size; i++)
+    {
+        res.elements[i] = rand() % BASE;
+        if (i == res_size - 1)
+        {
+            res.elements[i] = rand() % (BASE - 1) + 1;
+        }
+    }
+    return res;
+}
+
+// генерация случайного большого числа, не превосходящего заданное
+BigInt GenerateRandomMax(BigInt max)
+{
+    initRandom();
+    BigInt res(1);
+    do
+    {
+
+        size_t res_size ;
+        res_size= max.elements.size();
+        res.elements.resize(res_size);
+
+        for (int i = 0; i < res_size; i++)
+        {
+            res.elements[i] = rand() % BASE;
+            if (i == res_size - 1)
+            {
+                res.elements[i] = rand() % (max.elements[i] + 1);
+            }
+        }
+    } while (res > max);
+    
+    res.DelZeros();
+    return res;
+}
+
+void initRandom()
+{
+    srand(time(NULL));
 }
